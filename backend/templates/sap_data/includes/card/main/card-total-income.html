@@ -1,0 +1,15 @@
+{% load static %}
+{% load dashboards_extras %}
+
+        <div class="card h-100">
+          <div class="card-body" title="Общий объем за год">
+            <div class="card-title d-flex align-items-start justify-content-between">
+              <div class="avatar flex-shrink-0">
+                <img src="{% static '/img/icons/unicons/wallet-info.png' %}" alt="Credit Card" class="rounded">
+              </div>
+            </div>
+            <span>{{ year }}г., м²</span>
+            <h3 class="card-title text-nowrap mb-1"> {{ overall_total|div:3|floatformat:"1g" }}k</h3>
+            <small class="text-success fw-medium"> {{ overall_total|floatformat:"3g" }} м²</small>
+          </div>
+        </div>

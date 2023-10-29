@@ -1,0 +1,123 @@
+                    <div class="col-md-12 col-12 mb-md-0 mb-4">
+                      <div class="card">
+                        <h5 class="card-header">График</h5>
+                            <div class="card-body">
+                              <dl class="row mt-2">
+                                <dt class="col-sm-3 text-end">Наименование</dt>
+                                <dd class="col-sm-9"><h3 class="mb-0">{{ object.name }}</h3></dd>
+
+                                <dt class="col-sm-3 text-end text-muted">Параметры графика</dt>
+                                <dd class="col-sm-9">
+                                <div class="btn-group" id="dropdown-icon-demo">
+                                <button type="button" class="btn btn-xs btn-outline-secondary btn-icon rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bx bx-xs bx-dots-vertical-rounded"></i>
+                                  </button>
+                                  <ul class="dropdown-menu" style="">
+                                    <li>
+                                      <a class="dropdown-item btn-outline-success" href="{% url 'dashboard:data-edit' kwargs.data object.id %}"
+                                        ><i class="bx bx-edit-alt me-1"></i> Редактировать</a
+                                      >
+                                        <a class="dropdown-item btn-outline-primary" href="{% url 'dashboard:data-create' 'chart' object.id %}" role="button">
+                                          <i class="bx bx bxs-dashboard"></i> Добавить в дашборд
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item btn-outline-danger" href="{% url 'dashboard:data-delete' kwargs.data object.id %}" role="button">
+                                          <i class="bx bx-trash"></i> Удалить источник данных
+                                        </a>
+                                    </li>
+                                  </ul>
+                                </div>
+                                </dd>
+
+                                <dt class="col-sm-3 text-end">Источник данных</dt>
+                                <dd class="col-sm-9 text-muted">
+                                <a
+                                  data-bs-toggle="collapse"
+                                  href="#collapseExample"
+                                  role="button"
+                                  aria-expanded="false"
+                                  aria-controls="collapseExample"
+                                >
+                                  {{ object.datasource }} <i class='bx bx-chevron-down'></i>
+                                </a>
+                                </dd>
+
+                              <dt class="col-sm-3 text-end">
+                              </dt>
+                              <dd class="col-sm-9">
+                                <div class="collapse" id="collapseExample">
+                                    <div class="d-grid d-sm-flex p-3 border">
+                                      <span>
+                                        <dl class="row mt-2">
+                                            <dt class="col-sm-3 text-end">Наименование</dt>
+                                            <dd class="col-sm-9 text-muted"><i class="bx bx-link-alt me-1"></i> <a href="{% url 'dashboard:data-detail' 'sources' object.datasource.id %}">{{ object.datasource }} <i class='bx bx-link-external' ></i></a></dd>
+
+                                            <dt class="col-sm-3 text-end">Дата источника данных</dt>
+                                            <dd class="col-sm-9 text-muted"><i class='bx bxs-watch'></i> {{ object.datasource.created_at }}</dd>
+
+                                            <dt class="col-sm-3 text-end">Период источника данных</dt>
+                                            <dd class="col-sm-9 text-muted"><i class='bx bxs-calendar'></i> {{ object.datasource.date }}</dd>
+
+                                            <dt class="col-sm-3 text-end">Описание источника данных</dt>
+                                            <dd class="col-sm-9 text-muted">
+                                              <i class='bx bxs-message-square-detail' ></i> {{ object.datasource.description }}
+                                            </dd>
+
+                                            <dt class="col-sm-3 text-end">Календарное накопление</dt>
+                                            <dd class="col-sm-9">
+                                              <input {% if object.accrual %}checked="checked"{% endif %} class="form-check-input" type="checkbox" disabled />
+                                            </dd>
+
+                                        </dl>
+                                      </span>
+                                    </div>                              </dd>
+
+
+
+                                <dt class="col-sm-3 text-end">Колонки</dt>
+                                <dd class="col-sm-3">
+                                    <div class="list-group">
+                                        <a href="javascript:void(0);" class="list-group-item list-group-item-action btn-outline-secondary disabled">Все</a>
+                                      {% for column in object.columns %}
+                                        <a href="javascript:void(0);" class="list-group-item list-group-item-action">{{ column }}</a>
+                                      {% endfor %}
+                                    </div>
+                                </dd>
+
+                                <dd class="col-sm-3">
+                                    <div class="list-group">
+                                        <a href="javascript:void(0);" class="list-group-item list-group-item-action btn-outline-primary disabled">Фильтр</a>
+                                      {% for column in object.filter_columns %}
+                                        <a href="javascript:void(0);" class="list-group-item list-group-item-action">{{ column }}</a>
+                                      {% endfor %}
+                                    </div>
+                                </dd>
+                                <dd class="col-sm-3">
+                                    <div class="list-group">
+                                        <a href="javascript:void(0);" class="list-group-item list-group-item-action btn-outline-warning disabled">Группировка</a>
+                                      {% for column in object.group_columns %}
+                                        <a href="javascript:void(0);" class="list-group-item list-group-item-action">{{ column }}</a>
+                                      {% endfor %}
+                                    </div>
+                                </dd>
+
+                                <dt class="col-sm-3 text-end">Строки</dt>
+                                <dd class="col-sm-9">
+                                    <div class="list-group">
+                                    </div>
+                                </dd>
+
+                                <dt class="col-sm-3 text-truncate"></dt>
+                                <dd class="col-sm-9">
+
+                                </dd>
+                              </dl>
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+                          {% include "includes/pagination.html" %}
+                        </div>
+                      </div>
+                    </div>

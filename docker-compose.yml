@@ -1,0 +1,86 @@
+version: '3.3'
+
+services:
+  db:
+    image: dasha/postgres
+    build:
+      context: ./docker
+      dockerfile: ./postgres/Dockerfile
+    container_name: ${PG_CONTAINER_NAME}
+    environment:
+      POSTGRES_DB: ${DASHA_POSTGRES_DB}
+      POSTGRES_USER: ${DASHA_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${DASHA_POSTGRES_PASSWORD}
+      PGDATA: ${DASHA_PGDATA}
+      LANG: ru_RU.utf8
+    volumes:
+       - dasha_postgres_data:/data/dasha-postgres
+       - ${DUMP_VOLUME}:/home/db_dump
+    expose:
+      - "5432"
+    restart: unless-stopped
+    networks:
+          - network
+
+  django:
+    image: dasha/django
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    container_name: ${DASHA_CONTAINER_NAME}
+    environment:
+      DEBUG: ${DEBUG}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+      SECRET_KEY: ${SECRET_KEY}
+      DASHA_POSTGRES_DB: ${DASHA_POSTGRES_DB}
+      DASHA_POSTGRES_USER: ${DASHA_POSTGRES_USER}
+      DASHA_POSTGRES_PASSWORD: ${DASHA_POSTGRES_PASSWORD}
+      PG_CONTAINER_NAME: ${PG_CONTAINER_NAME}
+      CELERY_BROKER: ${CELERY_BROKER}
+      CELERY_BACKEND: ${CELERY_BACKEND}
+      STATICFILES: ${STATICFILES}
+    volumes:
+      - ./assets:/app/assets
+    ports:
+      - "4004:4004"
+    networks:
+          - network
+    depends_on:
+      - db
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    container_name: ${REDIS_CONTAINER_NAME}
+    networks:
+          - network
+
+  celery_worker:
+    image: dasha/celery
+    container_name: ${CELERY_CONTAINER_NAME}
+    build:
+      context: .
+      dockerfile: ./docker/worker/Dockerfile
+    environment:
+      REDIS_CONTAINER_NAME: ${REDIS_CONTAINER_NAME}
+      CELERY_BROKER: ${CELERY_BROKER}
+      CELERY_BACKEND: ${CELERY_BACKEND}
+    entrypoint: /app/worker-entrypoint.sh
+    networks:
+          - network
+    depends_on:
+      - redis
+      - db
+
+networks:
+  network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.180.0/24
+#          gateway: 192.168.180.1
+
+volumes:
+  dasha_postgres_data:
+    external: true

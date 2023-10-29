@@ -1,0 +1,54 @@
+{% if is_paginated %}
+                <nav aria-label="Page pagination"></nav>
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                           <li class="page-item first">
+                               <a class="page-link" href="?q={{ q|default_if_none:'' }}&title={{ title|default_if_none:'' }}{{ url_params }}{% for status_item in status %}&status={{ status_item }}{% endfor %}{% for site_item in site %}&site={{ site_item }}{% endfor %}&page={{ page_obj.number|add:-1 }}"><i class="tf-icon bx bx-chevrons-left"></i></a>
+                           </li>
+                        {% else %}
+                            <li class="page-item first disabled">
+                                <a class="page-link" href="#"><i class="tf-icon bx bx-chevrons-left"></i></a>
+                            </li>
+                        {% endif %}
+
+                        {% if page_obj.number|add:-7 > 1 %}
+                            <li class="page-item"><a class="page-link" href="?q={{ q|default_if_none:'' }}&title={{ title|default_if_none:'' }}{{ url_params }}{% for status_item in status %}&status={{ status_item }}{% endfor %}{% for site_item in site %}&site={{ site_item }}{% endfor %}&page=1">1</a></li>
+                        {% endif %}
+                        {% if page_obj.number|add:-7 > 2 %}
+
+                            <li class="page-item"><a class="page-link">...</a></li>
+
+                        {% endif %}
+
+                      {% for l in  page_obj.paginator.page_range %}
+                        {% if l <= page_obj.number|add:7 and l >= page_obj.number|add:-7 %}
+                        {% if forloop.counter == page_obj.number %}
+                            <li class="page-item active"><a class="page-link" href="#">{{forloop.counter}}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?q={{ q|default_if_none:'' }}&title={{ title|default_if_none:'' }}{{ url_params }}{% for status_item in status %}&status={{ status_item }}{% endfor %}{% for site_item in site %}&site={{ site_item }}{% endfor %}&page={{ forloop.counter }}">{{forloop.counter}}</a></li>
+                        {% endif %}
+                        {% endif %}
+                      {% endfor %}
+
+                        {% if page_obj.number|add:7 <= page_obj.paginator.num_pages|add:-2 %}
+
+                            <li><a>...</a></li>
+
+                        {% endif %}
+                        {% if page_obj.number|add:7 <= page_obj.paginator.num_pages|add:-1 %}
+                            <li><a class="page-link" href="?q={{ q|default_if_none:'' }}&title={{ title|default_if_none:'' }}{{ url_params }}{% for status_item in status %}&status={{ status_item }}{% endfor %}{% for site_item in site %}&site={{ site_item }}{% endfor %}&page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a></li>
+                        {% endif %}
+
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?q={{ q|default_if_none:'' }}&title={{ title|default_if_none:'' }}{{ url_params }}{% for status_item in status %}&status={{ status_item }}{% endfor %}{% for site_item in site %}&site={{ site_item }}{% endfor %}&page={{ page_obj.number|add:1 }}"><i class="tf-icon bx bx-chevrons-right"></i></a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#"><i class="tf-icon bx bx-chevrons-right"></i></a>
+                            </li>
+                        {% endif %}
+
+                    </ul>
+    </nav>
+{% endif %}

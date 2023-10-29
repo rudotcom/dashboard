@@ -1,0 +1,61 @@
+{% extends 'account/base.html' %}
+{% block breadcrumbs %} Личный кабинет / Уведомления {% endblock %}
+
+{% block page_content %}
+<div class="row">
+                    <div class="col-md-6 col-12 mb-md-0 mb-4">
+                      <div class="card">
+                        <h5 class="card-header">Настройки интерфейса</h5>
+                        <div class="card-body">
+                          <p>Display content from your connected accounts on your site</p>
+{% for i in "x"|ljust:"5" %}
+                          <div class="d-flex mb-3">
+                            <div class="flex-shrink-0">
+                              <img src="" alt="Иконка" class="me-3" height="30">
+                            </div>
+                            <div class="flex-grow-1 row">
+                              <div class="col-9 mb-sm-0 mb-2">
+                                <h6 class="mb-0">Настройка</h6>
+                                <small class="text-muted">Calendar and contacts</small>
+                              </div>
+                              <div class="col-3 text-end">
+                                <div class="form-check form-switch">
+                                  <input class="form-check-input float-end" type="checkbox" role="switch">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+{% endfor %}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                      <div class="card">
+                        <h5 class="card-header">Избранное</h5>
+                        <div class="card-body">
+                          <p>Дашборды</p>
+{% for i in "x"|ljust:"5" %}
+    <div class="d-flex mb-3">
+                            <div class="flex-shrink-0">
+                              <img src="" alt="Продажи" class="me-3" height="30">
+                            </div>
+                            <div class="flex-grow-1 row">
+                              <div class="col-8 col-sm-7 mb-sm-0 mb-2">
+                                <h6 class="mb-0">Продажи</h6>
+                                <small class="text-muted">Not Connected</small>
+                              </div>
+                              <div class="col-4 col-sm-5 text-end">
+                                <button type="button" class="btn btn-icon btn-outline-secondary">
+                                  <i class="bx bx-link-alt"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+{% endfor %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>{% endblock %}
+
+{% block page_js %}
+{% endblock %}

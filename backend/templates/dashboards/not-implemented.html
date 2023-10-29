@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% load dashboards_extras %}
+
+{% block page_css %}
+{% endblock page_css %}
+
+{% block title %}Справочники / Данные{% endblock %}
+
+{% block content %}
+            <!-- Content -->
+
+    <!--Under Maintenance -->
+      <div class="misc-wrapper">
+        <h2 class="mb-2 mx-2">В разработке!</h2>
+        <p class="mb-4 mx-2">Извините за причиненные неудобства. Страница еще находится в разработке!</p>
+        <a href="javascript:history.back()" class="btn btn-primary">Назад</a>
+        <div class="mt-4">
+          <img
+            src="{% static 'img/illustrations/girl-doing-yoga-light.png' %}"
+            alt="girl-doing-yoga-light"
+            width="500"
+            class="img-fluid"
+            data-app-dark-img="illustrations/girl-doing-yoga-dark.png"
+            data-app-light-img="illustrations/girl-doing-yoga-light.png"
+          />
+        </div>
+      </div>
+    <!-- /Under Maintenance -->
+
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'js/dashboards-analytics.js' %}"></script>
+<script src="{% static 'js/app-logistics-dashboard.js' %}"></script>
+<script src="{% static 'js/ui-popover.js' %}"></script>
+<script src="{% static 'js/extended-ui-perfect-scrollbar.js' %}"></script>
+{% endblock %}

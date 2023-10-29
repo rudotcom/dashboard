@@ -1,0 +1,114 @@
+                    <div class="col-md-12 col-12 mb-md-0 mb-4">
+                      <div class="card">
+                        <h5 class="card-header">Источник данных</h5>
+                        <div class="table-responsive">
+
+                            <div class="card-body">
+
+                              <dl class="row mt-2">
+                                <dt class="col-sm-3 text-end">Наименование</dt>
+                                <dd class="col-sm-9"><h3 class="mb-0">{{ object.name }}</h3></dd>
+
+                                <dt class="col-sm-3 text-end text-muted">Параметры источника данных</dt>
+                                <dd class="col-sm-9">
+                                    <div class="btn-group" id="dropdown-icon-demo">
+                                    <button type="button" class="btn btn-xs btn-outline-secondary btn-icon rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bx bx-xs bx-dots-vertical-rounded"></i>
+                                      </button>
+                                      <ul class="dropdown-menu" style="">
+                                        <li>
+                                          <a class="dropdown-item btn-outline-success" href="{% url 'dashboard:data-edit' kwargs.data object.id %}"
+                                            ><i class="bx bx-edit-alt me-1"></i> Редактировать</a
+                                          >
+                                            <a class="dropdown-item btn-outline-primary" href="{% url 'dashboard:data-create' 'chart' object.id %}" role="button">
+                                              <i class="bx bx-bar-chart"></i> Создать график
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item btn-outline-danger" href="{% url 'dashboard:data-delete' kwargs.data object.id %}" role="button">
+                                              <i class="bx bx-trash"></i> Удалить источник данных
+                                            </a>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                </dd>
+
+                                <dt class="col-sm-3 text-end">Создан</dt>
+                                <dd class="col-sm-9 text-muted"><i class='bx bxs-watch'></i> {{ object.created_at }}</dd>
+
+                                <dt class="col-sm-3 text-end">Период</dt>
+                                <dd class="col-sm-9"><i class='bx bxs-calendar'></i> {{ object.date }}</dd>
+
+                                <dt class="col-sm-3 text-end">Описание</dt>
+                                <dd class="col-sm-9">
+                                  <p><i class='bx bxs-message-square-detail' ></i> {{ object.description }}</p>
+                                </dd>
+
+                                <dt class="col-sm-3 text-end">Календарное накопление</dt>
+                                <dd class="col-sm-9">
+                                  <input {% if object.accrual %}checked="checked"{% endif %} class="form-check-input" type="checkbox" disabled />
+                                </dd>
+
+                                <dt class="col-sm-3 text-truncate"></dt>
+                                <dd class="col-sm-9">
+
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exLargeModal">
+                                      <i class="bx bx-table"></i> Посмотреть таблицу
+                                    </button>
+
+                                </dd>
+                              </dl>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                      <!-- Extra Large Modal -->
+                      <div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel4">Таблица: {{ object.name }} {{ object.date }}</h5>
+                              <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+                            <div class="modal-body">
+
+                            <!-- Vertical & Horizontal Scrollbars -->
+                            <div class="col-12">
+                              <div class="card overflow-hidden" style="height: 700px">
+                                <div class="card-body table-responsive text-wrap" id="both-scrollbars-example">
+                                  {{ table|safe }}
+                                </div>
+                              </div>
+                            </div>
+                            <!--/ Vertical & Horizontal Scrollbars -->
+
+                            </div>
+                            <div class="modal-footer">
+                                <div class="col-lg-6 col-sm-12 col-12">Источник данных:
+                                      <a class="btn btn-warning" href="{% url 'dashboard:data-edit' kwargs.data object.id %}"
+                                        ><i class="bx bx-edit-alt me-1"></i> Редактировать</a
+                                      >
+                                    <a class="btn btn-danger" href="{% url 'dashboard:data-delete' kwargs.data object.id %}" role="button">
+                                      <i class="bx bx-trash"></i> Удалить
+                                    </a>
+                                </div>
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <a class="btn btn-success" href="{% url 'dashboard:data-create' 'chart' object.id %}" role="button">
+                                      <i class="bx bx-bar-chart"></i> Создать график
+                                    </a>
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                    Закрыть
+                                    </button>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--/ Extra Large Modal -->

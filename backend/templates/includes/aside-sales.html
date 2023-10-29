@@ -1,0 +1,53 @@
+  <!-- MVP -->
+    <li class="menu-item
+     {% if '/sap/' in request.path %}active open
+    {% endif %}">
+      <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+        <div class="text-truncate" data-i18n="Продажи">Продажи</div>
+      </a>
+      <ul class="menu-sub">
+        <li class="menu-item{% if '/sap/main/' in request.path %} active{% endif %}">
+
+            <a href="{% url 'sap_data:main' %}" class="menu-link">
+            <img src="/assets/img/illustrations/girl-app-academy.png" width="30" alt="">
+            <div class="text-truncate" data-i18n="Сводная">&nbsp;</div>
+          </a>
+        </li>
+
+        <li class="menu-item{% if '/sap/manager/' in request.path %} active{% endif %}">
+          <a href="{% url 'sap_data:manager' %}" class="menu-link">
+            <img src="/assets/img/illustrations/man-with-laptop-light.png" width="30" alt="">
+            <div class="text-truncate" data-i18n="Менеджеры">&nbsp;</div>
+          </a>
+        </li>
+
+        <li class="menu-item{% if '/sap/customer/' in request.path %} active{% endif %}">
+          <a href="{% url 'sap_data:customer' %}" class="menu-link">
+            <img src="/assets/img/illustrations/boy-app-academy.png" width="30" alt="">
+            <div class="text-truncate" data-i18n="Клиенты">&nbsp;</div>
+          </a>
+        </li>
+
+        <li class="menu-item{% if '/sap/month/' in request.path %} active{% endif %}">
+          <a href="{% url 'sap_data:month' %}" class="menu-link">
+            <img src="/assets/img/illustrations/rocket.png" width="18" hspace="6" alt="">
+            <div class="text-truncate" data-i18n="Текущая">&nbsp;</div>
+          </a>
+        </li>
+
+        <li class="menu-item{% if '/sap/compare/' in request.path %} active{% endif %}">
+          <a href="{% url 'sap_data:compare' %}" class="menu-link">
+            <img src="/assets/img/illustrations/pencil-rocket.png" width="24" hspace="3" alt="">
+            <div class="text-truncate" data-i18n="Филиалы. Продукция">&nbsp;</div>
+          </a>
+        </li>
+
+        <li class="menu-item{% if '/dashboard/data-' in request.path %} active{% endif %}">
+          <a href="{% url 'dashboard:data-list' 'sources' %}" class="menu-link">
+            <div class="text-truncate" data-i18n="Импорт данных">&nbsp;</div>
+          </a>
+        </li>
+      </ul>
+    </li>
+  <!-- MVP -->

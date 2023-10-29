@@ -1,0 +1,32 @@
+{% load static %}
+{% load dashboards_extras %}
+
+    <div class="card">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <div class="card-title mb-0">
+          <h5 class="m-0 me-2"><i class='bx bxs-package' ></i> Продуктовый портфель</h5>
+        </div>
+        <div class="dropdown">
+          <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ month|month_name }}, {% if day != '0' %}{{ day|default_if_none:'месяц' }}{% else %}месяц{% endif %}</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="javascript:filterDay(0);">{{ month|month_name }} месяц</a></li>
+            {% for day in day_range %}
+            <li><a class="dropdown-item" href="javascript:filterDay({{ day }});">{{ day }}</a></li>
+            {% endfor %}
+          </ul>
+
+<script>
+function filterDay(day) {
+  const filterForm = document.getElementById("filter-form");
+  const monthInput = document.getElementById('day');
+  monthInput.setAttribute("value", day);
+  filterForm.submit();
+}
+</script>
+        </div>
+      </div>
+      <div class="card-body">
+        <div id="productChart" data-series='{{ product_data|safe }}'></div>
+      </div>
+    </div>

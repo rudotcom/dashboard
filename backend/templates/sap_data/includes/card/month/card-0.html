@@ -1,0 +1,86 @@
+{% load static %}
+{% load dashboards_extras %}
+
+    <div class="card h-100">
+          <form action="" id="filter-form">
+          <input type="hidden" name="day" id="day" value="{{ day|default_if_none:0 }}">
+      <div class="d-flex align-items-end row">
+        <div class="col-sm-5">
+          <div class="card-body">
+            <h5 class="card-title text-primary">Статистика филиалов за месяц.
+                <a href="{% url 'sap_data:month' %}" title="Сбросить фильтры"><button type="button" class="btn btn-sm btn-icon btn-outline-success">
+                  <i class='bx bx-check-double' ></i>
+                </button>
+                </a>
+            </h5>
+              <small class="text-light fw-semibold">Филиал</small>
+              <div class="demo-vertical-spacing">
+                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                  <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" name="site" value="2001"
+                  {% if "2001" in site %}
+                  checked="checked"
+                  {% endif %}/>
+                  <label class="btn btn-outline-primary" for="btncheck1">Подольск</label>
+                  <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off" name="site" value="2002"
+                  {% if "2002" in site %}
+                  checked="checked"
+                  {% endif %}/>
+                  <label class="btn btn-outline-primary" for="btncheck2">Истра</label>
+                  <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off" name="site" value="2004"
+                  {% if "2004" in site %}
+                  checked="checked"
+                  {% endif %}/>
+                  <label class="btn btn-outline-primary" for="btncheck3">Воронеж</label>
+                  <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off" name="site" value="2005"
+                  {% if "2005" in site %}
+                  checked="checked"
+                  {% endif %}/>
+                  <label class="btn btn-outline-primary" for="btncheck4">Ульяновск</label>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 text-sm-left">
+          <div class="card-body">
+          <h5 class="card-title text-success">{{ month|month_name }}</h5>
+              <small class="text-light fw-semibold">Сегмент</small>
+              <div class="demo-vertical-spacing">
+                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                  <input type="checkbox" class="btn-check" id="btncheck5" autocomplete="off" name="sector" value="big"
+                  {% if "big" in sector %}
+                  checked="checked"
+                  {% endif %}/>
+                  <label class="btn btn-outline-info" for="btncheck5">Крупный</label>
+                  <input type="checkbox" class="btn-check" id="btncheck6" autocomplete="off" name="sector" value="middle"
+                  {% if "middle" in sector %}
+                  checked="checked"
+                  {% endif %}/>
+                  <label class="btn btn-outline-info" for="btncheck6">Средний</label>
+                  <input type="checkbox" class="btn-check" id="btncheck7" autocomplete="off" name="sector" value="small"
+                  {% if "small" in sector %}
+                  checked="checked"
+                  {% endif %}/>
+                  <label class="btn btn-outline-info" for="btncheck7">Мелкий</label>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="col-sm-2 text-center text-sm-left">
+          <div class="card-body pb-0 px-0 px-md-4">
+            <img src="{% static '/img/illustrations/rocket.png' %}" height="140" alt="View Badge User" data-app-dark-img="illustrations/rocket.png" data-app-light-img="illustrations/rocket.png">
+          </div>
+        </div>
+      </div>
+        </form>
+    </div>
+
+<script>
+  const form = document.getElementById('filter-form');
+  const inputs = form.querySelectorAll('input');
+  inputs.forEach(input => {
+    input.addEventListener('change', () => {
+      form.submit();
+    });
+  });
+</script>

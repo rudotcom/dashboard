@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+{% load dashboards_extras %}
+
+{% block page_css %}
+{% endblock page_css %}
+
+{% block title %}Справочники / Данные{% endblock %}
+{% block breadcrumbs %}Справочники{% endblock %}
+
+{% block content %}
+            <!-- Content -->
+
+              <div class="row">
+                <div class="col-md-6">
+                  <ul class="nav nav-pills flex-column flex-md-row mb-3">
+                    <li class="nav-item">
+                      <a class="nav-link{% if kwargs.data == 'sources' %} active{% endif %}" href="{% url 'dashboard:data-list' 'sources' %}"
+                        ><i class="bx bx-link-alt me-1"></i> Источники данных</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link{% if kwargs.data == 'charts' %} active{% endif %}" href="{% url 'dashboard:data-list' 'charts' %}"
+                        ><i class='bx bxs-bar-chart-alt-2'></i> Графики</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link{% if kwargs.data == 'dashboards' %} active{% endif %}" href="{% url 'dashboard:data-list' 'dashboards' %}"
+                        ><i class='bx bxs-dashboard' ></i> Дашборды</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <ul class="nav nav-pills flex-column flex-md-row mb-3">
+
+                    <li class="nav-item">
+
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class='bx bxs-folder-plus' ></i>
+                          </button>
+                          <ul class="dropdown-menu" style="">
+                            <li><a class="dropdown-item" href="{% url 'dashboard:data-create' 'source' %}"><i class="bx bx-link-alt me-1"></i> Источник данных</a></li>
+                            <li><a class="dropdown-item" href="{% url 'dashboard:data-create' 'chart' %}"><i class='bx bxs-bar-chart-alt-2'></i> График</a></li>
+                            <li><a class="dropdown-item" href="{% url 'dashboard:data-create' 'dashboard' %}"><i class='bx bxs-dashboard' ></i> Дашборд</a></li>
+                            <li><hr></li>
+                            <li><a href="{% url 'sap_data:lux_table' %}" class="dropdown-item"><img src="{% static 'img/icons/brands/sap.png' %}" alt="файл SAP EXPORT">EXPORT</a></li>
+                          </ul>
+                        </div>
+                    </li>
+                  </ul>
+                </div>
+                  <div class="row">
+                      {% include "includes/list-"|addstr:kwargs.data|addstr:"-table.html" %}
+                  </div>
+                </div>
+            <!-- / Content -->
+
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'vendor/libs/jquery/jquery.js' %}"></script>
+<script src="{% static 'js/dashboards-analytics.js' %}"></script>
+<script src="{% static 'js/app-logistics-dashboard.js' %}"></script>
+<script src="{% static 'js/ui-popover.js' %}"></script>
+{% endblock %}

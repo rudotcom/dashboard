@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load dashboards_extras %}
+
+{% block page_css %}
+{% endblock page_css %}
+
+{% block title %}Личный кабинет{% endblock %}
+
+
+{% block content %}
+              <div class="row">
+                <div class="col-md-12">
+                  <ul class="nav nav-pills flex-column flex-md-row mb-3">
+                    <li class="nav-item">
+                      <a class="nav-link
+                      {% if request.path == '/account/' %}active{% endif %}
+                      " href="{% url 'account:index' %}"><i class="bx bx-user me-1"></i> Учетная запись</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link
+                      {% if request.path == '/account/notifications/' %}active{% endif %}
+                      " href="{% url 'account:notifications' %}"><i class="bx bx-bell me-1"></i> Уведомления</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link
+                      {% if request.path == '/account/settings/' %}active{% endif %}
+                      " href="{% url 'account:settings' %}"><i class="bx bx-link-alt me-1"></i> Настройки</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+    {% block page_content %}
+    {% endblock page_content %}
+
+{% endblock %}
+
+{% block page_js %}
+{% endblock %}

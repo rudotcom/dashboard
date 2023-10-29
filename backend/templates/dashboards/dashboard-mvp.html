@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_css %}
+{% endblock page_css %}
+
+{% block title %}Аналитика{% endblock %}
+
+{% block content %}
+
+          <div class="container-xxl flex-grow-1 container-p-y">
+
+
+
+<div class="row">
+  <div class="col-lg-10 mb-4 order-0">
+      {% include 'includes/card/card-0.html' %}
+  </div>
+  <div class="col-lg-2 col-md-4 order-1">
+      {% include 'includes/card/card-total-income.html' %}
+  </div>
+</div>
+
+<div class="row">
+  <!-- Product statistics -->
+  <div class="col-lg-6 order-3 col-xxl-6 mb-4 order-3">
+      {% include 'includes/card/card-portfolio.html' %}
+  </div>
+  <!--/ Product statistics -->
+
+  <!-- Shipment statistics-->
+  <div class="col-lg-6 order-3 col-xxl-6 mb-4 order-3">
+      {% include 'includes/card/card-shipment.html' %}
+  </div>
+  <!--/ Shipment statistics -->
+</div>
+
+<div class="row">
+
+  <!-- Total Revenue -->
+  <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
+      {% include 'includes/card/card-revenue.html' %}
+  </div>
+  <!--/ Total Revenue -->
+  <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
+    <div class="row">
+      <div class="col-6 mb-4">
+      {% include 'includes/card/card-payments.html' %}
+      </div>
+      <div class="col-6 mb-4">
+      {% include 'includes/card/card-revenue-small.html' %}
+      </div>
+      <!-- </div>
+    <div class="row"> -->
+      <div class="col-12 mb-4">
+      {% include 'includes/card/card-profile.html' %}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <!-- Order Statistics -->
+  <div class="col-md-6 col-lg-6 col-xl-6 order-0 mb-6">
+      {% include 'includes/card/card-product.html' %}
+  </div>
+  <!--/ Order Statistics -->
+
+  <!-- Expense Overview -->
+  <div class="col-md-6 col-lg-4 order-1 mb-4">
+      {% include 'includes/card/card-average-price.html' %}
+  </div>
+  <!--/ Expense Overview -->
+
+</div>
+
+
+          </div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'js/dashboards-analytics.js' %}"></script>
+<script src="{% static 'js/app-logistics-dashboard.js' %}"></script>
+{% endblock %}

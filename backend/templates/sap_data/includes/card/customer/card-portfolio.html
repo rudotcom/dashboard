@@ -1,0 +1,238 @@
+{% load static %}
+{% load dashboards_extras %}
+
+    <div class="card h-100">
+      <div class="card-header  d-flex align-items-center justify-content-between">
+        <div class="card-title mb-0">
+        <ul class="nav nav-pills" role="tablist">
+          <li class="nav-item">
+            <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-sites" aria-controls="navs-pills-sites" aria-selected="false"><i class='bx bxs-factory'></i> Филиалы</button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-product" aria-controls="navs-pills-product" aria-selected="true"><i class='bx bxs-package' ></i> Продуктовый портфель</button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-managers" aria-controls="navs-pills-managers" aria-selected="false"><i class='bx bx-user-circle' ></i> Менджеры</button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-regions" aria-controls="navs-pills-regions" aria-selected="false"><i class='bx bxs-map' ></i> Регионы</button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-vehicles" aria-controls="navs-pills-vehicles" aria-selected="false"><i class='bx bxs-truck'></i></button>
+          </li>
+        </ul>
+        </div>
+        <div class="dropdown">
+          <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ month|month_name }}</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="?sector={{ sector }}&customer={{ customer.pk }}">2023</a></li>
+            <li><a class="dropdown-item" href="?sector={{ sector }}&customer={{ customer.pk }}&month=1">Январь</a></li>
+            <li><a class="dropdown-item" href="?sector={{ sector }}&customer={{ customer.pk }}&month=2">Февраль</a></li>
+            <li><a class="dropdown-item" href="?sector={{ sector }}&customer={{ customer.pk }}&month=3">Март</a></li>
+            <li><a class="dropdown-item" href="?sector={{ sector }}&customer={{ customer.pk }}&month=4">Апрель</a></li>
+            <li><a class="dropdown-item" href="?sector={{ sector }}&customer={{ customer.pk }}&month=5;">Май</a></li>
+            <li><a class="dropdown-item" href="?sector={{ sector }}&customer={{ customer.pk }}&month=6">Июнь</a></li>
+            <li><a class="dropdown-item" href="?sector={{ sector }}&customer={{ customer.pk }}&month=7">Июль</a></li>
+            <li><a class="dropdown-item" href="?sector={{ sector }}&customer={{ customer.pk }}&month=8">Август</a></li>
+            <li><a class="dropdown-item" href="?sector={{ sector }}&customer={{ customer.pk }}&month=9">Сентябрь</a></li>
+            <li><a class="dropdown-item" href="?sector={{ sector }}&customer={{ customer.pk }}&month=10">Октябрь</a></li>
+            <li><a class="dropdown-item" href="?sector={{ sector }}&customer={{ customer.pk }}&month=11">Ноябрь</a></li>
+            <li><a class="dropdown-item" href="?sector={{ sector }}&customer={{ customer.pk }}&month=12">Декабрь</a></li>
+          </ul>
+
+<script>
+function filterMonth(month) {
+  const filterForm = document.getElementById("filter-form");
+  const monthInput = document.getElementById('month');
+  monthInput.setAttribute("value", month);
+  filterForm.submit();
+}
+</script>
+        </div>
+      </div>
+      <div class="tab-content pt-0">
+        <div class="tab-pane fade show active" id="navs-pills-sites" role="tabpanel">
+          <div class="table-responsive text-start">
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Филиал</th>
+                  <th>Объем, тыс м²</th>
+                  <th class="w-50">Доля %</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for row in sites %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>
+                      {{ row.site }}
+                  </td>
+                  <td class="text-end">{{ row.total|div:3|floatformat:"3g" }}</td>
+                  <td>
+                    <div class="d-flex justify-content-between align-items-center gap-3">
+                      <div class="progress w-100" style="height:10px;">
+                        <div class="progress-bar {{ row.top_ratio|bar_color }}" role="progressbar" style="width: {{ row.top_ratio }}%" aria-valuenow="{{ row.top_ratio }}" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+
+                    </div>
+                  </td>
+                  <td><small class="fw-medium">{{ row.ratio }}%</small></td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="navs-pills-product" role="tabpanel">
+          <div class="table-responsive text-start">
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Продукт</th>
+                  <th>Объем, тыс м²</th>
+                  <th class="w-50">Доля</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for row in products %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>
+                      {{ row.material__group__layers|layer_badge|safe }} {{ row.material__group__brief_name }}
+                  </td>
+                  <td>{{ row.total|div:3|floatformat:"3g" }}</td>
+                  <td>
+                    <div class="d-flex justify-content-between align-items-center gap-3">
+                      <div class="progress w-100" style="height:20px;">
+                        <div class="progress-bar {{ row.top_ratio|bar_color }}" role="progressbar" style="width: {{ row.top_ratio }}%" aria-valuenow="{{ row.top_ratio }}" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <small class="fw-medium">{{ row.ratio }}%</small>
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="navs-pills-managers" role="tabpanel">
+          <div class="table-responsive text-start">
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Менеджер</th>
+                  <th>Объем, тыс м²</th>
+                  <th class="w-25">Доля %</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for row in managers|slice:20 %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>
+                      {{ row.manager__name|default_if_none:"<i class='bx bx-user-x'></i> Не указан" }}
+                  </td>
+                  <td class="text-end">{{ row.total|div:3|floatformat:"3g" }}</td>
+                  <td>
+                    <div class="d-flex justify-content-between align-items-center gap-3">
+                      <div class="progress w-100" style="height:10px;">
+                        <div class="progress-bar {{ row.top_ratio|bar_color }}" role="progressbar" style="width: {{ row.top_ratio }}%" aria-valuenow="{{ row.top_ratio }}" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+
+                    </div>
+                  </td>
+                  <td><small class="fw-medium">{{ row.ratio }}%</small></td>
+                </tr>
+              {% endfor %}
+              {% if managers|slice:"20:21" %}
+              <tr><td></td><td colspan="3" class="text-muted"><i class='bx bxs-traffic-cone' ></i> Отображены не все позиции</td></tr>
+              {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="navs-pills-regions" role="tabpanel">
+          <div class="table-responsive text-start">
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Регион</th>
+                  <th>Объем, тыс м²</th>
+                  <th class="w-50">Доля %</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for row in regions|slice:20 %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>
+                      {{ row.region__name|default_if_none:"<i class='bx bx-user-x'></i> Не указан" }}
+                  </td>
+                  <td class="text-end">{{ row.total|div:3|floatformat:"3g" }}</td>
+                  <td>
+                    <div class="d-flex justify-content-between align-items-center gap-3">
+                      <div class="progress w-100" style="height:10px;">
+                        <div class="progress-bar {{ row.top_ratio|bar_color }}" role="progressbar" style="width: {{ row.top_ratio }}%" aria-valuenow="{{ row.top_ratio }}" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+
+                    </div>
+                  </td>
+                  <td><small class="fw-medium">{{ row.ratio }}%</small></td>
+                </tr>
+              {% endfor %}
+              {% if regions|slice:"20:21" %}
+              <tr><td></td><td colspan="3" class="text-muted"><i class='bx bxs-traffic-cone' ></i> Отображены не все позиции</td></tr>
+              {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="navs-pills-vehicles" role="tabpanel">
+          <div class="table-responsive text-start">
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Госномер</th>
+                  <th>Объем, тыс м²</th>
+                  <th class="w-50">Доля %</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for row in vehicles|slice:":20" %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>
+                      {{ row.vehicle__number_plate|number_plate|safe|default_if_none:"<i class='bx bx-user-x'></i> Не указан" }} {{ row.vehicle__make__name }}
+                  </td>
+                  <td class="text-end">{{ row.total|div:3|floatformat:"3g" }}</td>
+                  <td>
+                    <div class="d-flex justify-content-between align-items-center gap-3">
+                      <div class="progress w-100" style="height:10px;">
+                        <div class="progress-bar {{ row.top_ratio|bar_color }}" role="progressbar" style="width: {{ row.top_ratio }}%" aria-valuenow="{{ row.top_ratio }}" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+
+                    </div>
+                  </td>
+                  <td><small class="fw-medium">{{ row.ratio }}%</small></td>
+                </tr>
+              {% endfor %}
+              {% if vehicles|slice:"20:21" %}
+              <tr><td></td><td colspan="3" class="text-muted"><i class='bx bxs-traffic-cone' ></i> Отображены не все позиции</td></tr>
+              {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>

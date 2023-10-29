@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_css %}
+{% endblock page_css %}
+
+{% block title %}Статистика. Филиалы{% endblock %}
+{% block breadcrumbs %} <a href="{% url 'sap_data:main' %}">Продажи</a> / Динамика за год по филиалам {% endblock %}
+
+{% block content %}
+
+
+
+<div class="row">
+  <div class="col-lg-10 col-md-8 mb-4">
+      {% include 'sap_data/includes/card/compare/card-0.html' %}
+  </div>
+  <div class="col-lg-2 col-md-4 mb-4">
+      {% include 'sap_data/includes/card/main/card-total-income.html' %}
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-lg-6 col-xxl-6 mb-4 order-1 order-xxl-1">
+      {% include 'sap_data/includes/card/compare/monthly-shipment.html' %}
+  </div>
+  <div class="col-lg-6 col-xxl-6 mb-4 order-1 order-xxl-1">
+      {% include 'sap_data/includes/card/compare/monthly-sale.html' %}
+  </div>
+
+</div>
+
+
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'js/chart/year-lines.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% load static %}
+{% load dashboards_extras %}
+
+    <div class="card h-100">
+        <div class="row">
+            <div class="col-sm-9 col-10">
+              <div class="d-flex align-items-end row">
+                <input type="hidden" name="month" id="month" value="{{ month|default_if_none:0 }}">
+                <input type="hidden" name="customer" id="customer" value="{{ customer.pk|default_if_none:0 }}">
+                <div class="col-sm-8 text-sm-left">
+                  <div class="card-body">
+                    <h5 class="card-title text-primary">Статистика закупок клиентов по сегментам
+                        <a href="{% url 'sap_data:customer' %}" title="Сбросить фильтры"><button type="button" class="btn btn-sm btn-icon btn-outline-success">
+                          <i class='bx bx-check-double' ></i>
+                        </button>
+                        </a>
+                    </h5>
+              <small class="text-light fw-semibold">Сегмент</small>
+              <div class="demo-vertical-spacing">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <a href="?sector=big">
+                      <button class="btn
+                      {% if "big" in sector %}
+                      btn-dark
+                      {% else %}
+                      btn-outline-dark
+                      {% endif %}
+                      ">Крупный</button>
+                  </a>
+                  <a href="?sector=middle">
+                      <button class="btn
+                      {% if "middle" in sector %}
+                      btn-secondary
+                      {% else %}
+                      btn-outline-secondary
+                      {% endif %}
+                      ">Средний</button>
+                  </a>
+                  <a href="?sector=small">
+                      <button class="btn
+                      {% if "small" in sector %}
+                      btn-info
+                      {% else %}
+                      btn-outline-info
+                      {% endif %}
+                      ">Мелкий</button>
+                  </a>
+                </div>
+              </div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="card-body">
+                    <div class="dropdown">
+                      <button type="button" class="btn
+                      {% if sector == 'big' %}btn-dark
+                      {% elif sector == 'middle' %}btn-secondary
+                      {% elif sector == 'small' %}btn-info
+                      {% endif %}
+                       dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                          {% if customer %}{{ customer.name }}{% else %}Все клиенты сегмента{% endif %}</button>
+                      <ul class="dropdown-menu">
+                          {% for customer in customers %}
+                        <li><a class="dropdown-item" href="?sector={{ sector }}&customer={{customer.pk }}">{{ customer|format_name|safe }}</a></li>
+                          {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3 col-2">
+              <div class="card-body pb-0 px-0 px-md-4">
+                <img src="{% static '/img/illustrations/boy-app-academy.png' %}" height="140" alt="View Badge User" data-app-dark-img="illustrations/boy-app-academy.png" data-app-light-img="illustrations/boy-app-academy.png">
+              </div>
+            </div>
+        </div>
+    </div>
+<script>
+  const form = document.getElementById('filter-form');
+  const inputs = form.querySelectorAll('input');
+  inputs.forEach(input => {
+    input.addEventListener('change', () => {
+      form.submit();
+    });
+  });
+function filterCustomer(customer) {
+  const customerInput = document.getElementById('customer');
+  customerInput.value = customer;
+    console.log('submitted');
+  form.submit();
+}
+</script>

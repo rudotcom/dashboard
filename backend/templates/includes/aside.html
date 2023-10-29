@@ -1,0 +1,57 @@
+{% load static %}
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+
+
+  <div class="app-brand demo ">
+    <a href="{% url 'index' %}" class="app-brand-link">
+      <span class="app-brand-logo demo">
+        <img src="{% static 'img/icons/misc/logo.png' %}" alt="">
+    </span>
+      <span class="app-brand-text demo menu-text fw-bold ms-2">Dasha beard</span>
+    </a>
+
+    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+      <i class="bx bx-chevron-left bx-sm align-middle"></i>
+    </a>
+  </div>
+
+  <div class="menu-inner-shadow"></div>
+
+
+
+  <ul class="menu-inner py-2">
+
+  {% include 'includes/aside-sales.html' %}
+
+
+
+    <!-- Misc -->
+    <li class="menu-item">
+      <a href="{% url 'account:index' %}" class="menu-link">
+        <i class="menu-icon tf-icons bx bxs-user-detail"></i>
+        <div class="text-truncate" data-i18n="Аккаунт">&nbsp;</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="{% url 'dashboard:not-implemented' %}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-support"></i>
+        <div class="text-truncate" data-i18n="Поддержка">&nbsp;</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="{% url 'dashboard:faq' %}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-help-circle"></i>
+        <div class="text-truncate" data-i18n="ЧаВо">&nbsp;</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="{% url 'documentation' %}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-file"></i>
+        <div class="text-truncate" data-i18n="Документация">&nbsp;</div>
+      </a>
+    </li>
+  </ul>
+
+
+
+</aside>

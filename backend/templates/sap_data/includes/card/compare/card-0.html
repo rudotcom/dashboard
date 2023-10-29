@@ -1,0 +1,92 @@
+{% load static %}
+{% load dashboards_extras %}
+
+    <div class="card h-100">
+          <form action="" id="filter-form">
+      <div class="d-flex align-items-end row">
+        <div class="col-sm-7">
+          <div class="card-body">
+            <h5 class="card-title text-primary">Динамика отгрузок филиалов
+                <a href="{% url 'sap_data:compare' %}" title="Сбросить фильтры"><button type="button" class="btn btn-sm btn-icon btn-outline-success">
+                  <i class='bx bx-check-double' ></i>
+                </button>
+                </a>
+            </h5>
+              <small class="text-light fw-semibold">Продукция</small>
+              <div class="demo-vertical-spacing">
+                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group" id="group-3">
+                  <label class="btn btn-outline-warning" for="btncheck0" onclick="groupGroups(3);">3сл</label>
+                {% for material_group in material_groups_3 %}
+                  <input type="checkbox" class="btn-check" id="btncheck{{ material_group.code }}" autocomplete="off" name="group" value="{{ material_group.code }}"
+                  {% if material_group.code in group %}
+                  checked="checked"
+                  {% endif %}/>
+                  <label class="btn btn-outline-warning" for="btncheck{{ material_group.code }}">{{ material_group.brief_name }}</label>
+                {% endfor %}
+                </div>
+                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group" id="group-5">
+                  <label class="btn btn-outline-dark" for="btncheck0" onclick="groupGroups(5);">5сл</label>
+                {% for material_group in material_groups_5 %}
+                  <input type="checkbox" class="btn-check" id="btncheck{{ material_group.code }}" autocomplete="off" name="group" value="{{ material_group.code }}"
+                  {% if material_group.code in group %}
+                  checked="checked"
+                  {% endif %}/>
+                  <label class="btn btn-outline-dark" for="btncheck{{ material_group.code }}">{{ material_group.brief_name }}</label>
+                {% endfor %}
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3 text-sm-left">
+          <div class="card-body">
+          <h5 class="card-title text-success"></h5>
+              <small class="text-light fw-semibold">Сегмент</small>
+              <div class="demo-vertical-spacing">
+                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                  <input type="checkbox" class="btn-check" id="btncheck5" autocomplete="off" name="sector" value="big"
+                  {% if "big" in sector %}
+                  checked="checked"
+                  {% endif %}/>
+                  <label class="btn btn-outline-info" for="btncheck5">Крупный</label>
+                  <input type="checkbox" class="btn-check" id="btncheck6" autocomplete="off" name="sector" value="middle"
+                  {% if "middle" in sector %}
+                  checked="checked"
+                  {% endif %}/>
+                  <label class="btn btn-outline-info" for="btncheck6">Средний</label>
+                  <input type="checkbox" class="btn-check" id="btncheck7" autocomplete="off" name="sector" value="small"
+                  {% if "small" in sector %}
+                  checked="checked"
+                  {% endif %}/>
+                  <label class="btn btn-outline-info" for="btncheck7">Мелкий</label>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="col-sm-1 text-center text-sm-left">
+          <div class="card-body pb-0 px-0 px-md-4">
+            <img src="{% static '/img/illustrations/pencil-rocket.png' %}" height="140" alt="View Badge User" data-app-success-img="illustrations/pencil-rocket.png" data-app-light-img="illustrations/pencil-rocket.png">
+          </div>
+        </div>
+      </div>
+        </form>
+    </div>
+
+<script>
+  const form = document.getElementById('filter-form');
+  const inputs = form.querySelectorAll('input');
+  inputs.forEach(input => {
+    input.addEventListener('change', () => {
+      form.submit();
+    });
+  });
+  function groupGroups(index) {
+    const group = document.getElementById('group-' + index);
+    const inputs = group.querySelectorAll('input');
+    let is_checked = inputs[0].checked;
+    inputs.forEach(input => {
+        input.checked = !is_checked;
+    });
+    form.submit();
+  }
+</script>

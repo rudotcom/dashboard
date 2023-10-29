@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_css %}
+{% endblock page_css %}
+
+{% block title %}Статистика. Аналитика{% endblock %}
+{% block breadcrumbs %} Продажи {% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+  <div class="col-lg-10 col-md-8 mb-4">
+      {% include 'sap_data/includes/card/main/card-0.html' %}
+  </div>
+  <div class="col-lg-2 col-md-4 mb-4">
+      {% include 'sap_data/includes/card/main/card-total-income.html' %}
+  </div>
+</div>
+
+<div class="row">
+  <!-- Expense Overview -->
+  <div class="col-lg-3 col-xxl-3 mb-4 order-1 order-xxl-1">
+      {% include 'sap_data/includes/card/main/card-average-price.html' %}
+  </div>
+  <!--/ Expense Overview -->
+
+  <div class="col-lg-5 col-xxl-5 mb-4 order-2 order-xxl-1">
+      {% include 'sap_data/includes/card/main/card-shipment.html' %}
+  </div>
+  <div class="col-lg-4 col-xxl-4 mb-4 order-3 order-xxl-2">
+      {% include 'sap_data/includes/card/main/card-sales.html' %}
+  </div>
+</div>
+
+<div class="row">
+  <!-- Product statistics -->
+  <div class="col-lg-8 col-xl-8 mb-4">
+      {% include 'sap_data/includes/card/main/card-portfolio.html' %}
+  </div>
+  <!--/ Product statistics -->
+
+  <!-- Order Statistics -->
+  <div class="col-lg-4 col-xl-4 mb-4">
+      {% include 'sap_data/includes/card/main/card-product.html' %}
+  </div>
+  <!--/ Order Statistics -->
+</div>
+
+
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'js/chart/average-price.js' %}"></script>
+<script src="{% static 'js/chart/year-bars.js' %}"></script>
+<script src="{% static 'js/chart/product.js' %}"></script>
+{% endblock %}

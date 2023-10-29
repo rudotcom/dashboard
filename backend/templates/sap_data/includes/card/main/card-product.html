@@ -1,0 +1,41 @@
+{% load static %}
+{% load dashboards_extras %}
+
+    <div class="card">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <div class="card-title mb-0">
+          <h5 class="m-0 me-2"><i class='bx bxs-package' ></i> Продуктовый портфель</h5>
+        </div>
+        <div class="dropdown">
+          <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ month|month_name }}</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="javascript:filterMonth(0);">{{ year }}</a></li>
+            <li><a class="dropdown-item" href="javascript:filterMonth(1);">Январь</a></li>
+            <li><a class="dropdown-item" href="javascript:filterMonth(2);">Февраль</a></li>
+            <li><a class="dropdown-item" href="javascript:filterMonth(3);">Март</a></li>
+            <li><a class="dropdown-item" href="javascript:filterMonth(4);">Апрель</a></li>
+            <li><a class="dropdown-item" href="javascript:filterMonth(5);">Май</a></li>
+            <li><a class="dropdown-item" href="javascript:filterMonth(6);">Июнь</a></li>
+            <li><a class="dropdown-item" href="javascript:filterMonth(7);">Июль</a></li>
+            <li><a class="dropdown-item" href="javascript:filterMonth(8);">Август</a></li>
+            <li><a class="dropdown-item" href="javascript:filterMonth(9);">Сентябрь</a></li>
+            <li><a class="dropdown-item" href="javascript:filterMonth(10);">Октябрь</a></li>
+            <li><a class="dropdown-item" href="javascript:filterMonth(11);">Ноябрь</a></li>
+            <li><a class="dropdown-item" href="javascript:filterMonth(12);">Декабрь</a></li>
+          </ul>
+
+<script>
+function filterMonth(month) {
+  const filterForm = document.getElementById("filter-form");
+  const monthInput = document.getElementById('month');
+  monthInput.setAttribute("value", month);
+  filterForm.submit();
+}
+</script>
+        </div>
+      </div>
+      <div class="card-body">
+        <div id="productChart" data-series='{{ product_data|safe }}'></div>
+      </div>
+    </div>

@@ -1,0 +1,95 @@
+                    <div class="col-md-12 col-12 mb-md-0 mb-4">
+                      <div class="card">
+                        <h5 class="card-header">Источники данных</h5>
+                        <div class="card-body">
+                          <form method="post">
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <select id="sendNotification" class="form-select" name="sendNotification">
+                                  <option selected>Все Отделы</option>
+                                  <option>Тут будут все отделы</option>
+                                </select>
+                              </div>
+                              <div class="col-sm-6">
+                                <select id="sendNotification" class="form-select" name="sendNotification">
+                                  <option selected>Период</option>
+                                  <option>Месяц</option>
+                                  <option>Полгода</option>
+                                  <option>Год</option>
+                                  <option>3 года</option>
+                                </select>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                        <div class="table-responsive">
+                          <table class="table table-striped table-borderless border-bottom">
+                            <thead>
+                              <tr>
+                                <th class="text-nowrap text-center"></th>
+                                <th class="text-nowrap" colspan="2"><i class="bx bx-link-alt me-1"></i> Источник данных</th>
+                                <th class="text-nowrap text-center"><i class="bx bx-calendar me-1"></i> Период</th>
+                                <th class="text-nowrap text-center"><i class="bx bx-building me-1"></i> Отдел</th>
+                                <th class="text-nowrap text-center">👩🏻‍💻 Автор</th>
+                                <th class="text-nowrap text-center"><input class="form-check-input" type="checkbox" checked="checked" disabled> Доступен</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            {% for source in object_list %}
+                              <tr>
+                                  <td>
+                                      <div class="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                          <i class="bx bx-dots-vertical-rounded"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                          <a class="dropdown-item btn-outline-info" href="{% url 'dashboard:data-detail' kwargs.data source.id %}"
+                                          ><i class="bx bx-link-alt me-1"></i> {{ source.name }}</a>
+                                          <a class="dropdown-item btn-outline-success" href="{% url 'dashboard:data-edit' kwargs.data source.id %}"
+                                            ><i class="bx bx-edit-alt me-1"></i> Редактировать</a
+                                          >
+                                          <a class="dropdown-item btn-outline-primary" href="{% url 'dashboard:data-create' 'chart' source.id %}"
+                                            ><i class="bx bxs-bar-chart-alt-2 me-1"></i> Создать график</a
+                                          >
+                                          <a class="dropdown-item btn-outline-danger" href="{% url 'dashboard:data-delete' kwargs.data source.id %}"
+                                            ><i class="bx bx-trash me-1"></i> Удалить</a
+                                          >
+                                        </div>
+                                      </div>
+                                  </td>
+                                <td class="text-nowrap">
+                                    <a href="{% url 'dashboard:data-detail' kwargs.data source.id %}" class="text-reset">{{ source.name }}</a>
+                                </td>
+                                <td>
+                                {{ source.age_badge|safe }}
+                                </td>
+                                <td>
+                                  <div class="form-check d-flex justify-content-center">
+                                      {{ source.date }}
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="form-check d-flex justify-content-center">
+                                    Отдел
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="form-check d-flex justify-content-center">
+                                    Сотрудник
+                                  </div>
+                                <td>
+                                  <div class="form-check form-switch">
+                                    <input class="form-check-input float-end" type="checkbox" role="switch" checked="" disabled>
+                                  </div>
+                                </td>
+                                </td>
+                              </tr>
+                            {% endfor %}
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="card-body">
+                          {% include "includes/pagination.html" %}
+                        </div>
+                      </div>
+                    </div>

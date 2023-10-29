@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_css %}
+{% endblock page_css %}
+
+{% block title %}Загрузка{% endblock %}
+{% block breadcrumbs %}<span class="text-muted fw-light"><a href="{% url 'dashboard:data-list' 'sources' %}">Справочники</a>/</span> Загрузка файла экспорта из SAP{% endblock %}
+
+{% block content %}
+
+              <!-- Basic Layout & Basic with Icons -->
+              <div class="row">
+                <!-- Basic with Icons -->
+                <div class="col-xxl">
+                  <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                      <small class="text-muted float-end"><i class="bx bx-link-alt me-1"></i> Таблица EXPORT.XLSX выгружена из SAP/R3
+                          <button class="btn btn-xs rounded-pill btn-outline-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth">
+                           Подробнее
+                          </button>
+                      </small>
+                    </div>
+
+                    <div class="card-body">
+                      <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row mb-3">
+                          <label class="col-sm-2 form-label" for="basic-icon-default-message">Файл Excel</label>
+                          <div class="col-sm-10">
+                              <input type="file" class="form-control" name="lux_file">
+                            {% if form.csv.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {% for error in form.csv.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="row justify-content-end">
+                          <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary">Загрузить файл</button>
+                              <small class="text-light fw-semibold">Загрузка файла может занять какое-то время.
+                                  Дождитесь окончания загрузки.</small>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+              </div>
+            </div>
+
+            <div class="row">
+                <!-- Sectors -->
+                <div class="card shadow-none bg-transparent col-md-7">
+                    <div class="nav-align-top mb-4">
+                        <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+
+{% regroup companies by sector_amount as sector %}
+    {% for group in sector %}
+                          <li class="nav-item">
+                            <button type="button" class="nav-link
+                          {% if forloop.counter == 1 %}active{% endif %}
+                            " role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-{{ group.grouper }}" aria-controls="navs-pills-justified-home" aria-selected="true">
+                               {{ group.grouper }}
+                              <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger"> {{ group.list|length }} </span>
+                            </button>
+                          </li>
+    {% endfor %}
+                        </ul>
+
+                        <div class="tab-content">
+    {% for group in sector %}
+                          <div class="tab-pane fade
+                          {% if forloop.counter == 1 %}show active{% endif %}
+                            " id="navs-pills-{{ group.grouper }}" role="tabpanel">
+                            <h5 class="card-header">{{ group.grouper }}</h5>
+                                <div class="table-responsive text-wrap">
+                                  <table class="table table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th>Клиент</th>
+                                        <th>Объем</th>
+                                        <th>Дата оценки</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                {% for obj in group.list %}
+                                    <tr
+                                    {% if obj.last_checked != today %}
+                                        class="table-warning"
+                                    {% endif %}
+                                    >
+                                        <td>{{ obj.name }}</td>
+                                        <td class="text-end">{{ obj.amount|floatformat:"3g" }}</td>
+                                        <td class="text-muted">{{ obj.last_checked|date:"d M Y" }}</td>
+                                    </tr>
+
+                                {% endfor %}
+                                    </tbody>
+                                    </table>
+                                </div>
+                          </div>
+    {% endfor %}
+                        </div>
+                      </div>
+                </div>
+            <div class="card col-md-5">
+                <p>
+                    <ol>
+                        <li>Крупный - клиент с закупкой 100 и более тыс. м2 за прошлый месяц </li>
+                        <li>Средний - клиент с закупкой от 30 до 100 тыс. м2 за прошлый месяц</li>
+                        <li>Мелкий - клиент с закупкой менее 30 тыс. м2 за прошлый месяц </li>
+                    </ol>
+                </p>
+            </div>
+            </div>
+
+
+                        <div
+                          class="offcanvas offcanvas-end"
+                          data-bs-scroll="true"
+                          tabindex="-1"
+                          id="offcanvasBoth"
+                          aria-labelledby="offcanvasBothLabel"
+                        >
+                          <div class="offcanvas-header">
+                            <h5 id="offcanvasBothLabel" class="offcanvas-title">Загрузка данных из SAP/R3</h5>
+                            <button
+                              type="button"
+                              class="btn-close text-reset"
+                              data-bs-dismiss="offcanvas"
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                          <div class="offcanvas-body mx-0 flex-grow-0">
+                            <div class="col-md mb-4 mb-md-0">
+                              <div class="accordion mt-3" id="accordionExample">
+                                <div class="card accordion-item">
+                                  <h2 class="accordion-header" id="headingTwo">
+                                    <button
+                                      type="button"
+                                      class="accordion-button collapsed"
+                                      data-bs-toggle="collapse"
+                                      data-bs-target="#accordionTwo"
+                                      aria-expanded="false"
+                                      aria-controls="accordionTwo"
+                                    >
+                                      <i class='bx bx-table' ></i> Требования к таблице в файле Excel
+                                    </button>
+                                  </h2>
+                                  <div
+                                    id="accordionTwo"
+                                    class="accordion-collapse collapse"
+                                    aria-labelledby="headingTwo"
+                                    data-bs-parent="#accordionExample"
+                                  >
+                                    <div class="accordion-body">
+                                    {% if columns %}
+                                        <p>Файл в первой строке должен содержать заголовки колонок:<br>
+                                            {% for column in columns %}
+                                                <button type="button" class="btn btn-outline-secondary btn-xs">{{ column.1 }}</button>
+                                            {% endfor %}
+                                        </p>
+                                        <p>Порядок колонок не важен.</p>
+                                        <p>Сторно также учитывается</p>
+                                    {% endif %}
+
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="card accordion-item">
+                                  <h2 class="accordion-header" id="headingOne">
+                                    <button
+                                      type="button"
+                                      class="accordion-button collapsed"
+                                      data-bs-toggle="collapse"
+                                      data-bs-target="#accordionOne"
+                                      aria-expanded="false"
+                                      aria-controls="accordionOne"
+                                    >
+                                      <i class="bx bx-link-alt me-1"></i> Источник данных
+                                    </button>
+                                  </h2>
+
+                                  <div
+                                    id="accordionOne"
+                                    class="accordion-collapse collapse"
+                                    data-bs-parent="#accordionExample"
+                                  >
+                                    <div class="accordion-body">
+                                    <!-- List group Numbered -->
+                                      <div class="demo-inline-spacing mt-3">
+                                        <ol class="list-group list-group-numbered">
+                                          <li class="list-group-item">Используется для создания графиков</li>
+                                          <li class="list-group-item">Создается из загруженной таблицы Excel</li>
+                                          <li class="list-group-item">Данные загружаются и сохраняются на портале "как есть"</li>
+                                          <li class="list-group-item">Пользователь графика (дашборда) сможет фильтровать данные по выбранным колонкам</li>
+                                        </ol>
+                                      </div>
+                                    <!--/ List group Numbered -->
+
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="card accordion-item">
+                                  <h2 class="accordion-header" id="headingThree">
+                                    <button
+                                      type="button"
+                                      class="accordion-button collapsed"
+                                      data-bs-toggle="collapse"
+                                      data-bs-target="#accordionThree"
+                                      aria-expanded="false"
+                                      aria-controls="accordionThree"
+                                    >
+                                      Дополнительно
+                                    </button>
+                                  </h2>
+                                  <div
+                                    id="accordionThree"
+                                    class="accordion-collapse collapse"
+                                    aria-labelledby="headingThree"
+                                    data-bs-parent="#accordionExample"
+                                  >
+                                    <div class="accordion-body">
+                                      <p>Данные могут быть загружены в любой день месяца.</p>
+                                        <p>Загруженные ранее позиции повторно
+                                      не загружаются. Дубликаты игнорируются.</p>
+                                        <p>Уникальным составным индексом позиции приняты поля:
+                                        <button type="button" class="btn btn-outline-secondary btn-xs">Фактура</button>
+                                        <button type="button" class="btn btn-outline-secondary btn-xs">ОбразецПозицСделки</button>
+                                        </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                              <br>
+                              <button
+                              type="button"
+                              class="btn btn-outline-success d-grid w-100"
+                              data-bs-dismiss="offcanvas"
+                            >
+                              Закрыть
+                            </button>
+                          </div>
+                        </div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'js/dashboards-analytics.js' %}"></script>
+<script src="{% static 'js/app-logistics-dashboard.js' %}"></script>
+<script src="{% static 'js/ui-popover.js' %}"></script>
+{% endblock %}

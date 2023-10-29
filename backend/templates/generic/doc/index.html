@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+{% load dashboards_extras %}
+
+{% block page_css %}
+{% endblock page_css %}
+
+{% block title %}Документация{% endblock %}
+{% block breadcrumbs %} Документация {% endblock %}
+
+{% block content %}
+            <!-- Content -->
+    <div class="DocSearch-content col-12 container-p-y">
+        <h2 class="mb-4 doc-page-title">Документация</h2>
+
+                <div class="card-body">
+                  <div class="row">
+                    <!-- List group Flush (Without main border) -->
+                    <div class="col-lg-6 mb-4 mb-xl-0">
+                      <small class="text-light fw-semibold">Регламенты, приказы, распоряжения, касающиеся работы с системой статистики.</small>
+                      <div class="demo-inline-spacing mt-3">
+                        <div class="list-group list-group-flush">
+                          <a href="{% url 'documentation' 'agreement' %}" class="list-group-item list-group-item-action"
+                            >Соглашение о конфиденциальности</a
+                          >
+                          <a href="javascript:void(0);" class="list-group-item list-group-item-action"
+                            >Порядок...</a
+                          >
+                          <a href="javascript:void(0);" class="list-group-item list-group-item-action"
+                            >Регламент...</a
+                          >
+                          <a href="javascript:void(0);" class="list-group-item list-group-item-action"
+                            >Приказ...</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <!--/ List group Flush (Without main border) -->
+                  </div>
+
+              <!-- Buttons -->
+              <div class="d-flex justify-content-center mx-auto gap-3">
+              </div>
+            </div>
+
+            <div class="content-backdrop fade"></div>
+    <!-- / Content -->
+
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'js/dashboards-analytics.js' %}"></script>
+<script src="{% static 'js/app-logistics-dashboard.js' %}"></script>
+<script src="{% static 'js/ui-popover.js' %}"></script>
+<script src="{% static 'js/extended-ui-perfect-scrollbar.js' %}"></script>
+{% endblock %}

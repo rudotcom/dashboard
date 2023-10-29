@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+{% load dashboards_extras %}
+
+{% block page_css %}
+{% endblock page_css %}
+
+{% block title %}Документация{% endblock %}
+
+{% block content %}
+            <!-- Content -->
+    <div class="DocSearch-content col-12 container-p-y">
+        <h2 class="mb-4 doc-page-title">{% block doc_title %}{% endblock %}</h2>
+        <p class="lead">{% block doc_sub_title %}{% endblock %}</p>
+
+        <div class="row">
+            <div class="col-md-12">
+                {% block doc_content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+            <div class="content-backdrop fade"></div>
+    <!-- / Content -->
+
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'js/dashboards-analytics.js' %}"></script>
+<script src="{% static 'js/app-logistics-dashboard.js' %}"></script>
+<script src="{% static 'js/ui-popover.js' %}"></script>
+<script src="{% static 'js/extended-ui-perfect-scrollbar.js' %}"></script>
+{% endblock %}

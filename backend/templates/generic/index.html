@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+{% load dashboards_extras %}
+
+{% block page_css %}
+{% endblock page_css %}
+
+{% block title %}Справочники / Данные{% endblock %}
+{% block breadcrumbs %} Дашборды {% endblock %}
+
+{% block content %}
+            <!-- Content -->
+    <div class="DocSearch-content col-12 container-p-y">
+        <h2 class="mb-4 doc-page-title">Статистика и аналитика на polynex 🚀</h2>
+        <p class="lead">Эффективная визуальная интерактивная настраиваемая панель дашбордов.</p>
+
+        <div class="row">
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <div class="badge bg-label-danger p-3 rounded mb-3">
+                  <i class='bx bx-money' ></i>
+                </div>
+                <h4>Продажи</h4>
+                <p>Динамика продаж продукции по филиалам, клиентам, менеджерам в расчете за год и текущий месяц.
+                </p>
+                <p class="fw-bold mb-0"><a class="stretched-link" href="{% url 'sap_data:main' %}">Просмотр <i class="bx bx-chevron-right"></i></a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <div class="badge bg-label-success p-3 rounded mb-3">
+                  <i class='bx bx-sushi'></i>
+                </div>
+                <h4>Сырье</h4>
+                <p>Заказы и поставки сырья по филиалам.
+                </p>
+                <p class="fw-bold mb-0"><a class="stretched-link" href="{% url 'dashboard:not-implemented' %}">Просмотр <i class="bx bx-chevron-right"></i></a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <div class="badge bg-label-info p-3 rounded mb-3">
+                  <i class='bx bx-male-female' ></i>
+                </div>
+                <h4>Работники</h4>
+                <p>Оценка квалификации работников.
+                </p>
+                <p class="fw-bold mb-0"><a class="stretched-link" href="{% url 'dashboard:not-implemented' %}">Просмотр <i class="bx bx-chevron-right"></i></a></p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    </div>
+
+              <p>
+                Вопросы по использованию дашбордов
+                <a href="{% url 'dashboard:faq' %}" target="_blank">ЧаВо</a>
+              </p>
+
+              <!-- Buttons -->
+              <div class="d-flex justify-content-center mx-auto gap-3">
+              </div>
+
+            <div class="content-backdrop fade"></div>
+    <!-- / Content -->
+
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'js/dashboards-analytics.js' %}"></script>
+<script src="{% static 'js/app-logistics-dashboard.js' %}"></script>
+<script src="{% static 'js/ui-popover.js' %}"></script>
+<script src="{% static 'js/extended-ui-perfect-scrollbar.js' %}"></script>
+{% endblock %}
